@@ -1,15 +1,23 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import NavigationBar from './components/NavigationBar';
-import Logo from './components/Logo';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import ProfilePage from './ProfilePage';
+import HomePage from './HomePage';
+import CreatingPage from './CreatingPage';
 
 function App() {
   return (
     <div className="App">
       <NavigationBar/>
-      <Logo fontSize='5rem'/>
+      <BrowserRouter>
+          <Routes>
+            <Route path='/profilepage' element={<ProfilePage />} />
+            <Route path='/homepage' element={<HomePage />} />
+            <Route path='/creatingpage' element={<CreatingPage />} />
+          </Routes>
+        </BrowserRouter>
     </div>
   );
 }

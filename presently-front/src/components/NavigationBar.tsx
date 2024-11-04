@@ -20,7 +20,7 @@ const NavigationBar: React.FC = () => {
     <Navbar expand="lg" style={{ padding: '1rem', backgroundColor: '#DBDBDB' }}>
       <Container className="d-flex justify-content-around align-items-center flex-row py-2">
         <div className="d-flex align-items-center flex-grow-1 me-3"> 
-            <Nav.Link href="#dashboard" className="d-flex align-items-center me-2"> 
+            <Nav.Link href="/homepage" className="d-flex align-items-center me-2"> 
             <Button style={iconButtonStyle}>
                 <FaClipboardCheck style={{ color: '#FFFFFF', fontSize: '2rem' }} />
             </Button>
@@ -54,7 +54,7 @@ const NavigationBar: React.FC = () => {
             </div>
         </Form>
 
-        <Nav.Link href="#profile" className="d-flex align-items-center flex-grow-1 justify-content-end ms-3"> 
+        <Nav.Link href="/profilepage" className="d-flex align-items-center flex-grow-1 justify-content-end ms-3"> 
             <Button style={iconButtonStyle}>
             <FaUser style={{ color: '#FFFFFF', fontSize: '1.2rem' }} />
             </Button>
