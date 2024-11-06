@@ -3,7 +3,11 @@ import { Container, Card } from 'react-bootstrap';
 
 const PresentlyDescription: React.FC = () => {
   return (
-    <Container className="d-flex justify-content-center align-items-center vh-100">
+    <Container className="d-flex justify-content-center align-items-center vh-100"
+      style={{
+        marginTop: "15%",
+      }}  
+    >
       <Card style={{ maxWidth: '600px' }} className="p-4 shadow-sm">
         <Card.Body>
           <Card.Title className="text-center">

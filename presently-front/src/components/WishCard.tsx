@@ -15,7 +15,6 @@ const WishCard: React.FC<WishCardProps> = ({ title, description }) => {
         className="d-flex flex-row align-items-center p-3 position-relative"
         style={{ backgroundColor: '#d7a58e', borderRadius: '1rem', maxWidth: '70%' }}
       >
-        {/* Image Container */}
         <div className="col-6 d-flex justify-content-center align-items-center">
           <div
             className="position-relative d-flex justify-content-center align-items-center"
@@ -44,13 +43,11 @@ const WishCard: React.FC<WishCardProps> = ({ title, description }) => {
           </div>
         </div>
 
-        {/* Text Container */}
         <div className="col-6 d-flex flex-column">
           <h5 style={{ color: '#37452e', fontSize: '1.2em', wordWrap: 'break-word' }}>{title}</h5>
           <p style={{ color: '#37452e', fontSize: '0.9em', wordWrap: 'break-word' }}>{description}</p>
         </div>
 
-        {/* Checkmark positioned outside the card */}
         <div
           className="position-absolute d-flex justify-content-center align-items-center"
           style={{
