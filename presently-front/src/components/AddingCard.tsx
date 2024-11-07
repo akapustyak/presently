@@ -1,8 +1,42 @@
-import React from 'react';
+import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Card, Form, Button } from 'react-bootstrap';
 
 const AddingCard: React.FC = () => {
+  const [wishName, setWishName] = useState('');
+  const [wishDescription, setWishDescription] = useState('');
+  const [wishLink, setWishLink] = useState('');
+
+  const handleAddWish = async () => {
+    try {
+      const response = await fetch('http://127.0.0.1:8000/wishes/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('token')}`,
+        },
+        body: JSON.stringify({
+          name: wishName,
+          description: wishDescription,
+          link: wishLink,
+          image: null,
+        }),
+      }); 
+      
+      console.log(wishName)
+      if (response.ok) {
+        setWishName('');
+        setWishDescription('');
+        setWishLink('');
+        alert('Бажання додано успішно!');
+      } else {
+        console.error('Failed to add wish');
+      }
+    } catch (error) {
+      console.error('Error adding wish:', error);
+    }
+  };
+
   return (
     <div className="container d-flex justify-content-center align-items-center" style={{ height: '100vh' }}>
       <Card className="p-4" style={{ width: '28rem', backgroundColor: '#f2d1bd', borderRadius: '1.25rem', border: 'none', boxShadow: 'none' }}>
@@ -10,8 +44,8 @@ const AddingCard: React.FC = () => {
           <div className="bg-light" style={{ width: '8rem', height: '8rem', borderRadius: '1rem', flexShrink: 0 }}></div>
           <div className="flex-grow-1 ms-4">
             <Form.Group controlId="formWishName">
-                <Form.Control
-                className='mb-2'
+              <Form.Control
+                className="mb-2"
                 type="text"
                 placeholder="Введіть назву бажання"
                 style={{
@@ -19,6 +53,8 @@ const AddingCard: React.FC = () => {
                   border: 'none',
                   fontSize: '1.25rem',
                 }}
+                value={wishName}
+                onChange={(e) => setWishName(e.target.value)}
               />
             </Form.Group>
 
@@ -37,7 +73,9 @@ const AddingCard: React.FC = () => {
                   resize: 'none',
                 }}
                 maxLength={200}
-                rows={3}              
+                rows={3}
+                value={wishDescription}
+                onChange={(e) => setWishDescription(e.target.value)}
               />
             </Form.Group>
 
@@ -53,6 +91,8 @@ const AddingCard: React.FC = () => {
                     padding: '0.75rem',
                     fontSize: '1rem',
                   }}
+                  value={wishLink}
+                  onChange={(e) => setWishLink(e.target.value)}
                 />
                 <span
                   className="input-group-text"
@@ -68,7 +108,11 @@ const AddingCard: React.FC = () => {
             </Form.Group>
 
             <div className="d-flex justify-content-center mt-4">
-              <Button variant="primary" style={{ backgroundColor: '#b87c61', border: 'none', width: '100%' }}>
+              <Button
+                variant="primary"
+                style={{ backgroundColor: '#b87c61', border: 'none', width: '100%' }}
+                onClick={handleAddWish}
+              >
                 Підтвердити
               </Button>
             </div>

@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Navbar, Nav, Container, Form, FormControl, Button } from 'react-bootstrap';
 import { FaClipboardCheck, FaSearch } from 'react-icons/fa';
 import { FaUser } from 'react-icons/fa6';
 import Logo from './Logo';
+import { replace, useNavigate } from 'react-router-dom';
 
 const iconButtonStyle = {
   backgroundColor: '#A60321',
@@ -16,6 +17,21 @@ const iconButtonStyle = {
 };
 
 const NavigationBar: React.FC = () => {
+  const [searchQuery, setSearchQuery] = useState('');
+  const navigate = useNavigate();
+
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(event.target.value);
+  };
+
+  const handleSearchSubmit = (event: React.FormEvent) => {
+    event.preventDefault();
+    if (searchQuery.trim()) {
+      navigate("/homepage", {replace:true})
+      navigate(`/profilepage/${searchQuery}`, { replace: true });
+    }
+  };
+
   return (
     <Navbar expand="lg" style={{ padding: '1rem', backgroundColor: '#DBDBDB' }}>
       <Container className="d-flex justify-content-around align-items-center flex-row py-2">
@@ -29,7 +45,7 @@ const NavigationBar: React.FC = () => {
             <Logo fontSize="1.8rem" />
         </div>
 
-        <Form className="d-flex flex-grow-2 mx-3 justify-content-center"> 
+        <Form className="d-flex flex-grow-2 mx-3 justify-content-center" onSubmit={handleSearchSubmit}> 
             <div style={{ position: 'relative', width: '100%' }}>
             <FaSearch
                 style={{
@@ -43,6 +59,8 @@ const NavigationBar: React.FC = () => {
             <FormControl
                 type="search"
                 aria-label="Search"
+                value={searchQuery}
+                onChange={handleSearchChange}
                 style={{
                 paddingLeft: '2.5rem',
                 borderRadius: '1rem',
