@@ -6,14 +6,15 @@ import { AiOutlineLink, AiOutlineCheck } from 'react-icons/ai';
 interface WishCardProps {
   title: string;
   description: string;
+  link: string;
 }
 
-const WishCard: React.FC<WishCardProps> = ({ title, description }) => {
+const WishCard: React.FC<WishCardProps> = ({ title, description, link }) => {
   return (
-    <div className="wish-card d-flex justify-content-center">
+    <div className="wish-card d-flex justify-content-center my-5" style={{ width: '70%' }}>
       <Card
         className="d-flex flex-row align-items-center p-3 position-relative"
-        style={{ backgroundColor: '#d7a58e', borderRadius: '1rem', maxWidth: '70%' }}
+        style={{ backgroundColor: '#d7a58e', borderRadius: '1rem', width: '100%' }}
       >
         <div className="col-6 d-flex justify-content-center align-items-center">
           <div
