@@ -13,11 +13,12 @@ import RegisterForm from './components/RegisterForm';
 function App() {
   return (
     <div className="App">
-      <BrowserRouter >
+      <BrowserRouter>
       <NavigationBar/>
           <Routes>
             <Route path='/login' element={<LoginForm />} />
             <Route path='/homepage' element={<HomePage />} />
+            <Route path='/' element={<HomePage />} />
             <Route path='/creatingpage' element={<CreatingPage />} /> 
             <Route path='/signup' element={<RegisterForm />} />
             <Route

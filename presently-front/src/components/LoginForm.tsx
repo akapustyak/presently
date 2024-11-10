@@ -1,5 +1,59 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import styled from 'styled-components';
+import { Link } from 'react-router-dom/dist';
+
+const FormContainer = styled.div`
+  width: 18rem;
+  margin: 3rem auto;
+  text-align: left;
+`;
+
+const Title = styled.h2`
+  text-align: center;
+`;
+
+const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+`;
+
+const Label = styled.label`
+  display: block;
+  margin-bottom: 0.3rem;
+`;
+
+const Input = styled.input`
+  width: 100%;
+  padding: 0.5rem;
+  box-sizing: border-box;
+  margin-bottom: 1rem;
+`;
+
+const ErrorMessage = styled.p`
+  color: red;
+  margin-bottom: 1rem;
+`;
+
+const SubmitButton = styled.button`
+  width: 100%;
+  padding: 0.6rem;
+  font-size: 1rem;
+  background-color: #A67C63;
+  color: white;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+`;
+
+const LinkContainer = styled.p`
+  text-align: center;
+  margin-top: 1rem;
+`;
+
+const LinkText = styled.span`
+  color: #A60321;
+`;
 
 const LoginForm: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -25,46 +79,34 @@ const LoginForm: React.FC = () => {
   };
 
   return (
-    <div className='mt-5' style={{ width: '18rem', margin: '0 auto', textAlign: 'left' }}>
-      <h2 style={{ textAlign: 'center' }}>Вхід</h2>
-      <form onSubmit={handleLogin}>
-        <div style={{ marginBottom: '1rem' }}>
-          <label style={{ display: 'block', marginBottom: '0.3rem' }}>Email:</label>
-          <input
+    <FormContainer>
+      <Title>Вхід</Title>
+      <Form onSubmit={handleLogin}>
+        <div>
+          <Label>Email:</Label>
+          <Input
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
-            style={{ width: '100%', padding: '0.5rem', boxSizing: 'border-box' }}
-
           />
         </div>
-        <div style={{ marginBottom: '1rem' }}>
-          <label style={{ display: 'block', marginBottom: '0.3rem' }}>Пароль:</label>
-          <input
+        <div>
+          <Label>Пароль:</Label>
+          <Input
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
-            style={{ width: '100%', padding: '0.5rem', boxSizing: 'border-box' }}
           />
         </div>
-        {error && <p style={{ color: 'red' }}>{error}</p>}
-        <button
-          type="submit"
-          style={{
-              width: '100%',
-              padding: '0.6rem',
-              fontSize: '1rem',
-              backgroundColor: '#A67C63',
-              color: 'white',
-              border: 'none',
-              borderRadius: '0.25rem',
-              cursor: 'pointer'
-            }}
-        >Увійти</button>
-      </form>
-    </div>
+        {error && <ErrorMessage>{error}</ErrorMessage>}
+        <SubmitButton type="submit">Увійти</SubmitButton>
+      </Form>
+      <LinkContainer>
+        Вперше на сайті? <Link to="/signup"><LinkText>Реєстрація</LinkText></Link>
+      </LinkContainer>
+    </FormContainer>
   );
 };
 

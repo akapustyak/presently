@@ -1,6 +1,60 @@
 import React, { useState } from 'react';
+import styled from 'styled-components';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+
+const FormContainer = styled.div`
+  width: 18rem;
+  margin: 5rem auto 0;
+  text-align: left;
+`;
+
+const Title = styled.h2`
+  text-align: center;
+`;
+
+const Form = styled.form`
+  margin-top: 1rem;
+`;
+
+const FormGroup = styled.div`
+  margin-bottom: 1rem;
+`;
+
+const Label = styled.label`
+  display: block;
+  margin-bottom: 0.3rem;
+`;
+
+const Input = styled.input`
+  width: 100%;
+  padding: 0.5rem;
+  box-sizing: border-box;
+`;
+
+const Message = styled.p<{ color: string }>`
+  color: ${(props) => props.color};
+  margin-bottom: 1rem;
+`;
+
+const SubmitButton = styled.button`
+  width: 100%;
+  padding: 0.6rem;
+  font-size: 1rem;
+  background-color: #A67C63;
+  color: white;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+`;
+
+const LoginLink = styled.p`
+  text-align: center;
+  margin-top: 1rem;
+  & a {
+    color: #A60321;
+  }
+`;
 
 const RegisterForm: React.FC = () => {
   const [username, setUsername] = useState('');
@@ -49,71 +103,53 @@ const RegisterForm: React.FC = () => {
   };
 
   return (
-    <div className='mt-5' style={{ width: '18rem', margin: '0 auto', textAlign: 'left' }}>
-      <h2 style={{ textAlign: 'center' }}>Реєстрація</h2>
-      <form onSubmit={handleRegister}>
-        <div style={{ marginBottom: '1rem' }}>
-          <label style={{ display: 'block', marginBottom: '0.3rem' }}>Username:</label>
-          <input
+    <FormContainer>
+      <Title>Реєстрація</Title>
+      <Form onSubmit={handleRegister}>
+        <FormGroup>
+          <Label>Username:</Label>
+          <Input
             type="text"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             required
-            style={{ width: '100%', padding: '0.5rem', boxSizing: 'border-box' }}
           />
-        </div> 
-        <div style={{ marginBottom: '1rem' }}>
-          <label style={{ display: 'block', marginBottom: '0.3rem' }}>Email:</label>
-          <input
+        </FormGroup> 
+        <FormGroup>
+          <Label>Email:</Label>
+          <Input
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
-            style={{ width: '100%', padding: '0.5rem', boxSizing: 'border-box' }}
           />
-        </div>
-        <div style={{ marginBottom: '1rem' }}>
-          <label style={{ display: 'block', marginBottom: '0.3rem' }}>Пароль:</label>
-          <input
+        </FormGroup>
+        <FormGroup>
+          <Label>Пароль:</Label>
+          <Input
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
-            style={{ width: '100%', padding: '0.5rem', boxSizing: 'border-box' }}
           />
-        </div>
-        <div style={{ marginBottom: '1rem' }}>
-          <label style={{ display: 'block', marginBottom: '0.3rem' }}>Підтвердьте пароль:</label>
-          <input
+        </FormGroup>
+        <FormGroup>
+          <Label>Підтвердьте пароль:</Label>
+          <Input
             type="password"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
             required
-            style={{ width: '100%', padding: '0.5rem', boxSizing: 'border-box' }}
           />
-        </div>
-        {error && <p style={{ color: 'red', marginBottom: '1rem' }}>{error}</p>}
-        {success && <p style={{ color: 'green', marginBottom: '1rem' }}>{success}</p>}
-        <button
-          type="submit"
-          style={{
-            width: '100%',
-            padding: '0.6rem',
-            fontSize: '1rem',
-            backgroundColor: '#A67C63',
-            color: 'white',
-            border: 'none',
-            borderRadius: '0.25rem',
-            cursor: 'pointer'
-          }}
-        >
-          Зареєструватись
-        </button>
-      </form>
-      <p style={{ textAlign: 'center', marginTop: '1rem' }}>
-        Уже є акаунт? <Link to="/login" style={{ color: '#A60321' }}>Увійти</Link>
-      </p>
-    </div>
+        </FormGroup>
+        {error && <Message color="red">{error}</Message>}
+        {success && <Message color="green">{success}</Message>}
+        <SubmitButton type="submit">Зареєструватись</SubmitButton>
+      </Form>
+      <LoginLink>
+        Уже є акаунт? <Link to="/login">Увійти</Link>
+      </LoginLink>
+    </FormContainer>
   );
 };
 

@@ -1,6 +1,92 @@
 import React, { useState } from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import { Card, Form, Button } from 'react-bootstrap';
+import styled from 'styled-components';
+
+const Container = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+`;
+
+const StyledCard = styled.div`
+  padding: 2rem;
+  width: 28rem;
+  background-color: #f2d1bd;
+  border-radius: 1.25rem;
+  box-shadow: none;
+`;
+
+const ImagePlaceholder = styled.div`
+  width: 8rem;
+  height: 8rem;
+  border-radius: 1rem;
+  background-color: #e9ecef;
+  flex-shrink: 0;
+`;
+
+const FlexGrowContainer = styled.div`
+  flex-grow: 1;
+  margin-left: 1rem;
+`;
+
+const StyledInput = styled.input`
+  background-color: transparent;
+  border: none;
+  font-size: 1.25rem;
+  width: 100%;
+  margin-bottom: 0.5rem;
+`;
+
+const StyledTextArea = styled.textarea`
+  background-color: #b87c61;
+  border: none;
+  color: white;
+  height: 7rem;
+  border-radius: 1rem;
+  font-size: 1.125rem;
+  padding: 0.75rem;
+  resize: none;
+  width: 100%;
+`;
+
+const InputGroup = styled.div`
+  display: flex;
+  margin-top: 1rem;
+`;
+
+const StyledLinkInput = styled.input`
+  border-radius: 1rem 0 0 1rem;
+  border: none;
+  padding: 0.75rem;
+  font-size: 1rem;
+  flex: 1;
+`;
+
+const StyledButtonText = styled.span`
+  display: flex;
+  align-items: center;
+  padding: 0.75rem;
+  font-size: 1rem;
+  border-radius: 0 1rem 1rem 0;
+  background-color: #b87c61;
+  color: white;
+`;
+
+const StyledButton = styled.button`
+  background-color: #b87c61;
+  border: none;
+  width: 100%;
+  color: white;
+  padding: 0.75rem;
+  font-size: 1rem;
+  border-radius: 1rem;
+  cursor: pointer;
+  margin-top: 1rem;
+
+  &:hover {
+    opacity: 0.9;
+  }
+`;
 
 const AddingCard: React.FC = () => {
   const [wishName, setWishName] = useState('');
@@ -21,9 +107,8 @@ const AddingCard: React.FC = () => {
           link: wishLink,
           image: null,
         }),
-      }); 
-      
-      console.log(wishName)
+      });
+
       if (response.ok) {
         setWishName('');
         setWishDescription('');
@@ -38,88 +123,40 @@ const AddingCard: React.FC = () => {
   };
 
   return (
-    <div className="container d-flex justify-content-center align-items-center" style={{ height: '100vh' }}>
-      <Card className="p-4" style={{ width: '28rem', backgroundColor: '#f2d1bd', borderRadius: '1.25rem', border: 'none', boxShadow: 'none' }}>
-        <div className="d-flex">
-          <div className="bg-light" style={{ width: '8rem', height: '8rem', borderRadius: '1rem', flexShrink: 0 }}></div>
-          <div className="flex-grow-1 ms-4">
-            <Form.Group controlId="formWishName">
-              <Form.Control
-                className="mb-2"
-                type="text"
-                placeholder="Введіть назву бажання"
-                style={{
-                  backgroundColor: 'transparent',
-                  border: 'none',
-                  fontSize: '1.25rem',
-                }}
-                value={wishName}
-                onChange={(e) => setWishName(e.target.value)}
+    <Container>
+      <StyledCard>
+        <div style={{ display: 'flex' }}>
+          <ImagePlaceholder />
+          <FlexGrowContainer>
+            <StyledInput
+              type="text"
+              placeholder="Введіть назву бажання"
+              value={wishName}
+              onChange={(e) => setWishName(e.target.value)}
+            />
+            <StyledTextArea
+              placeholder="Введіть опис..."
+              maxLength={200}
+              rows={3}
+              value={wishDescription}
+              onChange={(e) => setWishDescription(e.target.value)}
+            />
+            <InputGroup>
+              <StyledLinkInput
+                type="url"
+                placeholder="Введіть посилання..."
+                value={wishLink}
+                onChange={(e) => setWishLink(e.target.value)}
               />
-            </Form.Group>
-
-            <Form.Group controlId="formWishDescription">
-              <Form.Control
-                as="textarea"
-                placeholder="Введіть опис..."
-                style={{
-                  backgroundColor: '#b87c61',
-                  border: 'none',
-                  color: 'white',
-                  height: '7rem',
-                  borderRadius: '1rem',
-                  fontSize: '1.125rem',
-                  padding: '0.75rem',
-                  resize: 'none',
-                }}
-                maxLength={200}
-                rows={3}
-                value={wishDescription}
-                onChange={(e) => setWishDescription(e.target.value)}
-              />
-            </Form.Group>
-
-            <Form.Group controlId="formWishLink" className="mt-3">
-              <div className="input-group">
-                <input
-                  type="url"
-                  placeholder="Введіть посилання..."
-                  className="form-control"
-                  style={{
-                    borderRadius: '1rem 0 0 1rem',
-                    border: 'none',
-                    padding: '0.75rem',
-                    fontSize: '1rem',
-                  }}
-                  value={wishLink}
-                  onChange={(e) => setWishLink(e.target.value)}
-                />
-                <span
-                  className="input-group-text"
-                  style={{
-                    borderRadius: '0 1rem 1rem 0',
-                    backgroundColor: '#b87c61',
-                    color: 'white',
-                  }}
-                >
-                  <i className="bi bi-link" style={{ fontSize: '1rem' }}></i>
-                </span>
-              </div>
-            </Form.Group>
-
-            <div className="d-flex justify-content-center mt-4">
-              <Button
-                variant="primary"
-                style={{ backgroundColor: '#b87c61', border: 'none', width: '100%' }}
-                onClick={handleAddWish}
-              >
-                Підтвердити
-              </Button>
-            </div>
-          </div>
+              <StyledButtonText>
+                <i className="bi bi-link" style={{ fontSize: '1rem' }}></i>
+              </StyledButtonText>
+            </InputGroup>
+            <StyledButton onClick={handleAddWish}>Підтвердити</StyledButton>
+          </FlexGrowContainer>
         </div>
-      </Card>
-    </div>
+      </StyledCard>
+    </Container>
   );
 };
 

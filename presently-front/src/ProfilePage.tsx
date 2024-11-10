@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import ProfileCard from './components/ProfileCard';
 import WishCard from './components/WishCard';
+import styled from 'styled-components';
 
 interface User {
     username: string;
@@ -20,13 +21,26 @@ interface ProfilePageProps {
     username: string | null | undefined;
 }
 
-const ProfilePage: React.FC<ProfilePageProps> = ({username}) => {
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+`;
+
+const ProfileWrapper = styled.div`
+  margin-bottom: 1rem;
+  width: 100%;
+`;
+
+const ProfilePage: React.FC<ProfilePageProps> = ({ username }) => {
     const [user, setUser] = useState<User | null>(null);
     const [wishes, setWishes] = useState<Wish[]>([]);
 
     useEffect(() => {
         const fetchUserData = async () => {
-                try {
+            try {
                 const userToFetch = username || (await fetch('http://127.0.0.1:8000/auth/users/', {
                     method: 'GET',
                     headers: {
@@ -80,11 +94,11 @@ const ProfilePage: React.FC<ProfilePageProps> = ({username}) => {
     }, [user?.username, username]);
 
     return (
-        <div className="d-flex justify-content-center flex-column align-items-center" >
+        <Container>
             {user && (
-                <div className='mb-2' style={{width: '100%'}}>
+                <ProfileWrapper>
                     <ProfileCard username={user.username} followers={user.followers} following={user.following} />
-                </div>
+                </ProfileWrapper>
             )}
             {wishes.map((wish) => (
                 <WishCard 
@@ -94,7 +108,7 @@ const ProfilePage: React.FC<ProfilePageProps> = ({username}) => {
                     link={wish.link}
                 />
             ))}
-        </div>
+        </Container>
     );
 };
 

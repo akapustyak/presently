@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { FaUserCircle } from 'react-icons/fa';
+import styled from 'styled-components';
 import axios from 'axios';
 
 interface ProfileProps {
@@ -9,6 +9,69 @@ interface ProfileProps {
   followers: string;
   following: string;
 }
+
+const CardContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 2rem;
+  margin: 2.5rem 0;
+  background-color: #dcb39c;
+  width: 100%;
+  font-size: 2em;
+`;
+
+const UserName = styled.div`
+  font-weight: bold;
+  font-size: 1.2em;
+`;
+
+const StatsContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 1rem;
+  font-size: 0.9em;
+`;
+
+const StatItem = styled.div`
+  text-align: center;
+  margin-right: 1.5rem;
+
+  &:last-child {
+    margin-right: 0;
+  }
+`;
+
+const ButtonContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  margin-top: 1rem;
+  width: 100%;
+`;
+
+const StyledButton = styled.button`
+  background-color: #a67a60;
+  border: none;
+  color: white;
+  font-size: 0.75em;
+  padding: 0.5rem 1rem;
+  width: 45%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    background-color: #8e634d;
+  }
+`;
+
+const LinkText = styled.span`
+  color: white;
+  text-decoration: none;
+`;
 
 const ProfileCard: React.FC<ProfileProps> = ({ username, followers, following }) => {
   const [currentUsername, setCurrentUsername] = useState<string | null>(null);
@@ -19,13 +82,13 @@ const ProfileCard: React.FC<ProfileProps> = ({ username, followers, following })
         const response = await fetch('http://127.0.0.1:8000/auth/users/me/', {
           method: 'GET',
           headers: {
-            'Authorization': `Bearer ${localStorage.getItem('token')}`,
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
           },
         });
 
         if (response.ok) {
           const data = await response.json();
-          setCurrentUsername(data.username); 
+          setCurrentUsername(data.username);
         } else {
           console.error('Failed to fetch current user data');
         }
@@ -40,103 +103,76 @@ const ProfileCard: React.FC<ProfileProps> = ({ username, followers, following })
   const navigate = useNavigate();
   const handleLogout = () => {
     localStorage.clear();
-    navigate('/homepage', {replace:true});
+    navigate('/homepage', { replace: true });
   };
-  
-const handleFollow = async () => {
-  try {
-    const response = await axios.get(`http://127.0.0.1:8000/users/?search=${username}`, {
-      headers: {
-        'Authorization': `Bearer ${localStorage.getItem('token')}`,
-      }
-    });
 
-    if (response.data && response.data.length > 0) {
-      const userId = response.data[0].id; 
-      
-      const followResponse = await axios.post(`http://127.0.0.1:8000/users/${userId}/follow/`, {username: ""}, {
-      headers: {
-        'Authorization': `Bearer ${localStorage.getItem('token')}`,
-      }
-    });
+  const handleFollow = async () => {
+    try {
+      const response = await axios.get(`http://127.0.0.1:8000/users/?search=${username}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      });
 
-    console.log('Follow response:', followResponse.data);
+      if (response.data && response.data.length > 0) {
+        const userId = response.data[0].id;
 
+        const followResponse = await axios.post(
+          `http://127.0.0.1:8000/users/${userId}/follow/`,
+          { username: '' },
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem('token')}`,
+            },
+          }
+        );
 
-      if (followResponse.status === 200) {
-        console.log('Підписка успішна');
+        console.log('Follow response:', followResponse.data);
+
+        if (followResponse.status === 200) {
+          console.log('Підписка успішна');
+        } else {
+          console.error('Не вдалося підписатися');
+        }
       } else {
-        console.error('Не вдалося підписатися');
+        console.error('Користувач не знайдений');
       }
-    } else {
-      console.error('Користувач не знайдений');
+    } catch (error) {
+      console.error('Помилка при підписці:', error);
     }
-  } catch (error) {
-    console.error('Помилка при підписці:', error);
-  }
-};
-
+  };
 
   return (
-    <div className="d-flex align-items-center justify-content-around p-4 my-5"
-      style={{
-        backgroundColor: '#dcb39c',
-        width: '100%',
-        fontSize: '2em',
-     }}>
-      <FaUserCircle color="white" size={250}/>
-      <div className='d-flex flex-column justify-content-center'>
-        <div className='mb-2'>
-          <b>
-            @{username}
-          </b>
-        </div>
-        <div className="d-flex justify-content-between w-100 px-5 my-2">
-          <div className='me-4'>
-            <p className="mb-0">{followers}</p>
+    <CardContainer>
+      <FaUserCircle color="white" size={250} />
+      <div>
+        <UserName>@{username}</UserName>
+        <StatsContainer>
+          <StatItem>
+            <p>{followers}</p>
             <small>Слідкувачі</small>
-          </div>
-          <div>
-            <p className="mb-0">{following}</p>
+          </StatItem>
+          <StatItem>
+            <p>{following}</p>
             <small>Слідкування</small>
-          </div>
-        </div>
-        {currentUsername === username && (
-          <div className='d-flex align-items-center mt-2 justify-content-around'>
-            <Link to={'/CreatingPage'}
-              style={{
-                width: '45%',
-              }}
-            >
-            <button
-              className="btn btn-secondary"
-              style={{
-                backgroundColor: '#a67a60',
-                borderColor: '#a67a60',
-                fontSize: '0.75em',
-                width: '100%',
-              }}>
-              <div className='pb-1'>Додати</div>
-            </button>
-            </Link>
-            <button
-              className="btn btn-secondary"
-              onClick={handleLogout}
-              style={{
-                backgroundColor: '#a67a60',
-                borderColor: '#a67a60',
-                fontSize: '0.75em',
-                width: '45%',
-              }}>
-              <div className='pb-1'>Вийти</div>
-            </button>
-          </div>
+          </StatItem>
+        </StatsContainer>
+        {currentUsername === username ? (
+          <ButtonContainer>
+            <StyledButton>
+             <Link style={{textDecoration: "none"}} to={'/CreatingPage'}>
+                <LinkText>Додати</LinkText>
+              </Link>
+            </StyledButton>
+            <StyledButton onClick={handleLogout}>Вийти</StyledButton>
+          </ButtonContainer>
+        ) : (
+          <ButtonContainer>
+            <StyledButton onClick={handleFollow}>Слідкувати</StyledButton>
+          </ButtonContainer>
         )}
-        {currentUsername != username && (
-          <div className='d-flex justify-content-center'><button onClick={handleFollow} className="btn btn-secondary" style={{ backgroundColor: '#a67a60', borderColor: '#a67a60', width: '70%', fontSize: '0.75em'}}><div className='pb-1'>Слідкувати</div></button></div>
-        )}
-        </div>
-    </div>
+      </div>
+    </CardContainer>
   );
 };
 
