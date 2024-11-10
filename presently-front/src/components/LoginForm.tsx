@@ -29,25 +29,40 @@ const LoginForm: React.FC = () => {
       <h2 style={{ textAlign: 'center' }}>Вхід</h2>
       <form onSubmit={handleLogin}>
         <div style={{ marginBottom: '1rem' }}>
-          <label>Email:</label>
+          <label style={{ display: 'block', marginBottom: '0.3rem' }}>Email:</label>
           <input
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
+            style={{ width: '100%', padding: '0.5rem', boxSizing: 'border-box' }}
+
           />
         </div>
         <div style={{ marginBottom: '1rem' }}>
-          <label>Пароль:</label>
+          <label style={{ display: 'block', marginBottom: '0.3rem' }}>Пароль:</label>
           <input
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
+            style={{ width: '100%', padding: '0.5rem', boxSizing: 'border-box' }}
           />
         </div>
         {error && <p style={{ color: 'red' }}>{error}</p>}
-        <button type="submit">Увійти</button>
+        <button
+          type="submit"
+          style={{
+              width: '100%',
+              padding: '0.6rem',
+              fontSize: '1rem',
+              backgroundColor: '#A67C63',
+              color: 'white',
+              border: 'none',
+              borderRadius: '0.25rem',
+              cursor: 'pointer'
+            }}
+        >Увійти</button>
       </form>
     </div>
   );
