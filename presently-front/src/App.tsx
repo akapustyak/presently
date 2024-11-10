@@ -13,7 +13,7 @@ import RegisterForm from './components/RegisterForm';
 function App() {
   return (
     <div className="App">
-      <BrowserRouter>
+      <BrowserRouter >
       <NavigationBar/>
           <Routes>
             <Route path='/login' element={<LoginForm />} />
