@@ -30,6 +30,9 @@
     }
   },
   "include": [
-    "src"
+    "src",
+    "cypress",
+    "tests",
+    "**/*.test.tsx"
   ]
 }

@@ -113,6 +113,7 @@ const RegisterForm: React.FC = () => {
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             required
+            name='username'
           />
         </FormGroup> 
         <FormGroup>
@@ -122,6 +123,7 @@ const RegisterForm: React.FC = () => {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
+            name='email'
           />
         </FormGroup>
         <FormGroup>
@@ -131,6 +133,7 @@ const RegisterForm: React.FC = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
+            name="password"
           />
         </FormGroup>
         <FormGroup>
@@ -140,6 +143,7 @@ const RegisterForm: React.FC = () => {
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
             required
+            name='cpassword'
           />
         </FormGroup>
         {error && <Message color="red">{error}</Message>}
