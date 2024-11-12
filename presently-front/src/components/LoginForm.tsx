@@ -89,6 +89,7 @@ const LoginForm: React.FC = () => {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
+            name="email"
           />
         </div>
         <div>
@@ -98,6 +99,7 @@ const LoginForm: React.FC = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
+            name="password"
           />
         </div>
         {error && <ErrorMessage>{error}</ErrorMessage>}
