@@ -1,23 +1,48 @@
 import React from 'react';
-import { Card } from 'react-bootstrap';
+import styled from 'styled-components';
+
+const Container = styled.div`
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  height: 20rem;
+`;
+
+const Line = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 30vh;
+  margin-bottom: 1.25rem;
+  background-color: #A67C63;
+`;
+
+const InnerContainer = styled.div`
+  padding: 1rem;
+`;
+
+const StyledCard = styled.div`
+  width: 100%;
+  text-align: center;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+`;
+
+const StyledImage = styled.img`
+  height: 20rem;
+  object-fit: cover;
+`;
 
 const GiftCard: React.FC = () => {
   return (
-    <div
-      className="d-flex justify-content-center align-items-center vh-10 mb-5"
-      style={{ backgroundColor: '#A67C63' }}
-    >
-      <div style={{padding: '1rem' }}>
-        <Card style={{ width: '100%' }} className="text-center shadow-sm">
-          <Card.Img
-            variant="top"
-            src="/gifts.jpg"
-            alt="Gift boxes"
-            style={{ height: '20rem', objectFit: 'cover' }}
-          />
-        </Card>
-      </div>
-    </div>
+    <Container>
+      <Line>
+        <InnerContainer>
+          <StyledCard>
+            <StyledImage src="/gifts.jpg" alt="Gift boxes" />
+          </StyledCard>
+        </InnerContainer>
+      </Line>
+    </Container>
   );
 };
 

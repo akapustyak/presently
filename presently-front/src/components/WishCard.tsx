@@ -1,68 +1,112 @@
 import React from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import { Card } from 'react-bootstrap';
+import styled from 'styled-components';
 import { AiOutlineLink, AiOutlineCheck } from 'react-icons/ai';
 
 interface WishCardProps {
   title: string;
   description: string;
+  link: string;
 }
 
-const WishCard: React.FC<WishCardProps> = ({ title, description }) => {
+const CardWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  margin: 2rem 0;
+  width: 100%;
+`;
+
+const CardContainer = styled.div`
+  display: flex;
+  align-items: center;
+  position: relative;
+  background-color: #d7a58e;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  width: 90%;
+  max-width: 600px;
+`;
+
+const ImageWrapper = styled.div`
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 10rem;
+  height: 10rem;
+  border: 2px solid #007aff;
+  border-radius: 1rem;
+  background-color: #ffffff;
+  margin-right: 1rem;
+`;
+
+const LinkIconWrapper = styled.div`
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 3rem;
+  height: 3rem;
+  background-color: #a36b5c;
+  border-radius: 50%;
+  bottom: -10%;
+  right: -10%;
+`;
+
+const TextWrapper = styled.div`
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+`;
+
+const Title = styled.h5`
+  color: #37452e;
+  font-size: 1.2em;
+  word-wrap: break-word;
+  margin: 0;
+`;
+
+const Description = styled.p`
+  color: #37452e;
+  font-size: 0.9em;
+  word-wrap: break-word;
+  margin: 0.5rem 0 0;
+`;
+
+const CheckIconWrapper = styled.div`
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 4rem;
+  height: 4rem;
+  background-color: #b5002b;
+  border-radius: 50%;
+  bottom: -7%;
+  right: -3%;
+`;
+
+const WishCard: React.FC<WishCardProps> = ({ title, description, link }) => {
   return (
-    <div className="wish-card d-flex justify-content-center">
-      <Card
-        className="d-flex flex-row align-items-center p-3 position-relative"
-        style={{ backgroundColor: '#d7a58e', borderRadius: '1rem', maxWidth: '70%' }}
-      >
-        <div className="col-6 d-flex justify-content-center align-items-center">
-          <div
-            className="position-relative d-flex justify-content-center align-items-center"
-            style={{
-              width: '17rem',
-              height: '17rem',
-              border: '0.2vw solid #007aff',
-              borderRadius: '1rem',
-              backgroundColor: '#ffffff',
-              marginRight: '1rem'
-            }}
-          >
-            <div
-              className="position-absolute d-flex justify-content-center align-items-center"
-              style={{
-                width: '25%',
-                height: '25%',
-                backgroundColor: '#a36b5c',
-                borderRadius: '50%',
-                bottom: '-10%',
-                right: '-10%'
-              }}
-            >
-              <AiOutlineLink color="white" size={48} />
-            </div>
-          </div>
-        </div>
+    <CardWrapper>
+      <CardContainer>
+        <ImageWrapper>
+          <LinkIconWrapper>
+            <a href={link} target="_blank" rel="noopener noreferrer">
+              <AiOutlineLink color="white" size={24} />
+            </a>
+          </LinkIconWrapper>
+        </ImageWrapper>
 
-        <div className="col-6 d-flex flex-column">
-          <h5 style={{ color: '#37452e', fontSize: '1.2em', wordWrap: 'break-word' }}>{title}</h5>
-          <p style={{ color: '#37452e', fontSize: '0.9em', wordWrap: 'break-word' }}>{description}</p>
-        </div>
+        <TextWrapper>
+          <Title>{title}</Title>
+          <Description>{description}</Description>
+        </TextWrapper>
 
-        <div
-          className="position-absolute d-flex justify-content-center align-items-center"
-          style={{
-            width: '5rem',
-            height: '5rem',
-            backgroundColor: '#b5002b',
-            borderRadius: '50%',
-            bottom: '-7%',
-            right: '-3%'
-          }}
-        >
-          <AiOutlineCheck color="white" size={70}/>
-        </div>
-      </Card>
-    </div>
+        <CheckIconWrapper>
+          <AiOutlineCheck color="white" size={30} />
+        </CheckIconWrapper>
+      </CardContainer>
+    </CardWrapper>
   );
 };
 
